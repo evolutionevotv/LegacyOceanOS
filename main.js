@@ -210,12 +210,10 @@ windowEnable(document.getElementById("uiWindow"), true);
 windowEnable(document.getElementById("terminalWindow"), true);
 
 window.onload = function() { // this executes after above has executed & resources finished loading
-    setTimeout(function() {
-      document.body.removeChild(document.getElementById("startup"));
-      document.getElementById("shutdown").style = "background-color:black;width:100%;height:100%;position:absolute;z-index:256;";
-      setTimeout(function() {
-        document.getElementById("shutdown").style = "transition:0.5s;margin:50%;margin-top:0%;width:0%;height:0%;position:absolute;";
-        setTimeout(function(){document.getElementById("shutdown").style = "display: none;"},600)
-      }, 1000)
-    }, 1000);
+  document.body.removeChild(document.getElementById("startup"));
+  document.getElementById("shutdown").style = "background-color:black;width:100%;height:100%;position:absolute;z-index:256;";
+  setTimeout(function() {
+    document.getElementById("shutdown").style = "transition:0.5s;margin:50%;margin-top:0%;width:0%;height:0%;position:absolute;";
+    setTimeout(function(){document.getElementById("shutdown").style = "display: none;"},600)
+  }, 1000)
 }
