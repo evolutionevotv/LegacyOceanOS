@@ -95,7 +95,7 @@ document.getElementById("systemReboot").onmousedown = function() {
   }, 1000);
 }
 
-function windowEnable(elmnt, canDrag) {
+function windowEnable(elmnt) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
   var firstActivate = document.getElementById(elmnt.id + "Open")
   var secondActivate = null;
@@ -103,7 +103,12 @@ function windowEnable(elmnt, canDrag) {
   var fourthActivate = null;
   var maximize = null;
   document.getElementById(elmnt.id + "Close").onmouseup = function() {
-    elmnt.style = "display: none;";
+    elmnt.style.transition = null;
+    elmnt.style.transform = "scale(0.1)";
+    elmnt.style.opacity = 0;
+    setTimeout(function() {
+      elmnt.style = "display: none;";
+    }, 200)
   }
   try {var secondActivate=document.getElementById(elmnt.id + "Open2");}catch(a){}
   try {var thirdActivate=document.getElementById(elmnt.id + "Open3");}catch(a){}
@@ -172,8 +177,7 @@ function windowEnable(elmnt, canDrag) {
       elmnt.style = "top: 50px; transition: none;";
     }, 100)
   }
-  if (canDrag) {
-    document.getElementById(elmnt.id + "TitleBar").onmousedown = function(e) {
+  document.getElementById(elmnt.id + "TitleBar").onmousedown = function(e) {
     e = e || window.event;
     pos3 = e.clientX;
     pos4 = e.clientY;
@@ -193,7 +197,6 @@ function windowEnable(elmnt, canDrag) {
       elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
       elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
     }
-    }
   }
 }
 
@@ -204,10 +207,10 @@ document.getElementById("closeAllWindows").onmousedown = function() {
   document.getElementById("terminalWindow").style = "display: none;";
 }
 
-windowEnable(document.getElementById("aboutWindow"), true);
-windowEnable(document.getElementById("settingsWindow"), true);
-windowEnable(document.getElementById("uiWindow"), true);
-windowEnable(document.getElementById("terminalWindow"), true);
+windowEnable(document.getElementById("aboutWindow"));
+windowEnable(document.getElementById("settingsWindow"));
+windowEnable(document.getElementById("uiWindow"));
+windowEnable(document.getElementById("terminalWindow"));
 
 window.onload = function() { // this executes after above has executed & resources finished loading
   document.body.removeChild(document.getElementById("startup"));
