@@ -23,7 +23,7 @@ transparencyEffects.onchange = function() {
     transparencyEffectsStyle.sheet.insertRule("a{}");
   } else {
     transparencyEffectsStyle.sheet.deleteRule(0);
-    transparencyEffectsStyle.sheet.insertRule(".blur{backdrop-filter:none;background-color:rgb(40,40,40);}");
+    transparencyEffectsStyle.sheet.insertRule(".blur{backdrop-filter:none;background-color:rgb(50,50,50);}");
   }
 }
 

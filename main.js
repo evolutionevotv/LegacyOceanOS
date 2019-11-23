@@ -8,6 +8,13 @@ var clockMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"
 
 var osContextMenu = document.getElementById("osContextMenu");
 
+var windows = [
+  document.getElementById("aboutWindow"),
+  document.getElementById("terminalWindow"),
+  document.getElementById("uiWindow"),
+  document.getElementById("settingsWindow")
+];
+
 setInterval( function() {
 	var date = new Date();
   var minute = date.getMinutes()
@@ -74,7 +81,7 @@ document.addEventListener("contextmenu", function(e) {
       osContextMenu.style.top = e.clientY + "px";
     }, 1)
 }, false);
-document.addEventListener("mousedown", function() {
+document.addEventListener("mouseup", function() {
   osContextMenu.style = "display: none;"
 })
 
@@ -116,12 +123,12 @@ function windowEnable(elmnt) {
   try {var maximize=document.getElementById(elmnt.id + "Maximize");}catch(a){}
   if (maximize) {
     maximize.onmouseup = function() {
-      elmnt.style.height = document.getElementById(elmnt.id + "Body").style.height ? document.getElementById(elmnt.id + "Body").style.height : "0%";
-      elmnt.style.width = document.getElementById(elmnt.id + "Body").style.width ? document.getElementById(elmnt.id + "Body").style.width : "0%";
+      elmnt.style.height = document.getElementById(elmnt.id + "Body").style.height ? document.getElementById(elmnt.id + "Body").style.height : "300px";
+      elmnt.style.width = document.getElementById(elmnt.id + "Body").style.width ? document.getElementById(elmnt.id + "Body").style.width : "300px";
       document.getElementById(elmnt.id + "Body").style.resize = "none";
       document.getElementById(elmnt.id + "Body").style.height = null;
       document.getElementById(elmnt.id + "Body").style.width = null;
-      elmnt.style.transition = null;
+      elmnt.style.transition = "0.5s"
       setTimeout(function() {
         elmnt.style.top = "31px";
         elmnt.style.left = "0px";
@@ -131,60 +138,27 @@ function windowEnable(elmnt) {
       }, 1)
     }
   }
-  if (secondActivate) {
-    secondActivate.onmouseup = function() {
-      if (maximize) document.getElementById(elmnt.id + "Body").style.resize = null;
-      elmnt.style = "top: 30px;";
-      setTimeout(function() {
-        elmnt.style = "top: 50px;";
-      }, 1)
-      setTimeout(function() {
-        elmnt.style = "top: 50px; transition: none;";
-      }, 100)
-    }
-  }
-  if (thirdActivate) {
-    thirdActivate.onmousedown = function() {
-      if (maximize) document.getElementById(elmnt.id + "Body").style.resize = null;
-      elmnt.style = "top: 30px;";
-      setTimeout(function() {
-        elmnt.style = "top: 50px;";
-      }, 1)
-      setTimeout(function() {
-        elmnt.style = "top: 50px; transition: none;";
-      }, 100)
-    }
-  }
-  if (fourthActivate) {
-    fourthActivate.onmousedown = function() {
-      if (maximize) document.getElementById(elmnt.id + "Body").style.resize = null;
-      elmnt.style = "top: 30px;";
-      setTimeout(function() {
-        elmnt.style = "top: 50px;";
-      }, 1)
-      setTimeout(function() {
-        elmnt.style = "top: 50px; transition: none;";
-      }, 100)
-    }
-  }
-  firstActivate.onmouseup = function() {
+  function openWindow() {
     if (maximize) document.getElementById(elmnt.id + "Body").style.resize = null;
     elmnt.style = "top: 30px;";
+    windows.forEach(window => window.style.zIndex = 1);
+    elmnt.style.zIndex = 2;
     setTimeout(function() {
-      elmnt.style = "top: 50px;";
-    }, 1)
+      elmnt.style.top = "50px";
+    }, 3)
     setTimeout(function() {
-      elmnt.style = "top: 50px; transition: none;";
+      elmnt.style.transition = "none";
     }, 100)
   }
+  firstActivate.addEventListener("click", openWindow)
+  if (secondActivate) secondActivate.addEventListener("click", openWindow);
+  if (thirdActivate) thirdActivate.addEventListener("click", openWindow);
+  if (fourthActivate) fourthActivate.addEventListener("click", openWindow);
   document.getElementById(elmnt.id + "TitleBar").onmousedown = function(e) {
     e = e || window.event;
     pos3 = e.clientX;
     pos4 = e.clientY;
-    document.getElementById("aboutWindow").style.zIndex = 1;
-    document.getElementById("settingsWindow").style.zIndex = 1;
-    document.getElementById("uiWindow").style.zIndex = 1;
-    document.getElementById("terminalWindow").style.zIndex = 1;
+    windows.forEach(window => window.style.zIndex = 1);
     elmnt.style.zIndex = 2;
     document.onmouseup = function() {document.onmouseup = null; document.onmousemove = null;};
     document.onmousemove = function(e) {
@@ -201,16 +175,17 @@ function windowEnable(elmnt) {
 }
 
 document.getElementById("closeAllWindows").onmousedown = function() {
-  document.getElementById("aboutWindow").style = "display: none;";
-  document.getElementById("settingsWindow").style = "display: none;";
-  document.getElementById("uiWindow").style = "display: none;";
-  document.getElementById("terminalWindow").style = "display: none;";
+  windows.forEach(window => {
+    window.style.transition = null;
+    window.style.transform = "scale(0.1)";
+    window.style.opacity = 0;
+    setTimeout(function() {
+      window.style = "display: none;";
+    }, 200)
+  })
 }
 
-windowEnable(document.getElementById("aboutWindow"));
-windowEnable(document.getElementById("settingsWindow"));
-windowEnable(document.getElementById("uiWindow"));
-windowEnable(document.getElementById("terminalWindow"));
+windows.forEach(window => windowEnable(window));
 
 window.onload = function() { // this executes after above has executed & resources finished loading
   document.body.removeChild(document.getElementById("startup"));

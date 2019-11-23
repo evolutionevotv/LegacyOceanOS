@@ -13,7 +13,6 @@ a:hover { text-decoration: underline; }
 ::-webkit-scrollbar-thumb:hover { background-color: rgba(0,0,0,0.5); }
 
 .sysbar {
-  background-color: rgb(40,40,40);
   padding-left: 5px;
   padding-right: 5px;
   color: white;
@@ -25,7 +24,6 @@ a:hover { text-decoration: underline; }
   left: 25%;
   width: 50%;
   text-align: center;
-  background-color: rgb(40,40,40);
   color: white;
   border-radius: 5px 5px 0px 0px;
   cursor: default;
@@ -57,7 +55,6 @@ a:hover { text-decoration: underline; }
 
 .contextMenu {
   position: relative;
-  background-color: rgb(40,40,40);
   color: white;
   border-radius: 5px;
   padding-top: 5px;
@@ -107,7 +104,6 @@ a:hover { text-decoration: underline; }
   cursor: default;
 }
 .windowBody {
-  background-color: rgb(40,40,40);
   color: #ebebeb;
   border-radius: 0px 0px 5px 5px;
   padding: 15px;
