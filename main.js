@@ -26,55 +26,54 @@ sysbarSystem.addEventListener("click", function() {
   if (sysbarClick) {
     sysbarClick = false;
     sysbarSystem.style = null;
-    sysbarSystemContextMenu.style = "display: none;";
-    sysbarAppsContextMenu.style = "display: none;";
+    sysbarSystemContextMenu.style = "display:none;";
+    sysbarAppsContextMenu.style = "display:none;";
     sysbarApps.style = null;
   } else {
     sysbarClick = true;
-    sysbarSystemContextMenu.style = "transform: translate(0px, -20px);";
+    sysbarSystemContextMenu.style = "transform:translate(0px, -20px);";
     setTimeout(function(){
-      sysbarSystemContextMenu.style = "transform: translate(0px, 0px);";
+      sysbarSystemContextMenu.style = "transform:translate(0px, 0px);";
     }, 1)
-    sysbarSystem.style = "background-color: #004b8a;";
+    sysbarSystem.style = "background-color:#004b8a";
   }
 });
 sysbarApps.addEventListener("click", function() {
   if (sysbarClick) {
     sysbarClick = false;
     sysbarApps.style = null;
-    sysbarSystemContextMenu.style = "display: none;";
-    sysbarAppsContextMenu.style = "display: none;";
+    sysbarSystemContextMenu.style = "display:none;";
+    sysbarAppsContextMenu.style = "display:none;";
     sysbarSystem.style = null;
   } else {
     sysbarClick = true;
-    sysbarAppsContextMenu.style = "transform: translate(81px, -20px);";
+    sysbarAppsContextMenu.style = "transform:translate(81px, -20px);";
     setTimeout(function(){
-      sysbarAppsContextMenu.style = "transform: translate(81px, 0px);";
+      sysbarAppsContextMenu.style = "transform:translate(81px, 0px);";
     }, 1)
-    sysbarApps.style = "background-color: #004b8a;";
+    sysbarApps.style = "background-color:#004b8a";
   }
 });
 
 sysbarSystem.addEventListener("mouseover", function() {
   if (sysbarClick) {
-    sysbarSystem.style = "background-color: #004b8a;";
+    sysbarSystem.style = "background-color:#004b8a";
     sysbarSystemContextMenu.style = null;
-    sysbarAppsContextMenu.style = "display: none;";
+    sysbarAppsContextMenu.style = "display:none;";
     sysbarApps.style = null;
   }
 });
 sysbarApps.addEventListener("mouseover", function() {
   if (sysbarClick) {
-    sysbarApps.style = "background-color: #004b8a;";
-    sysbarSystemContextMenu.style = "display: none;";
-    sysbarAppsContextMenu.style = "transform: translate(81px, 0px);";
+    sysbarApps.style = "background-color:#004b8a";
+    sysbarSystemContextMenu.style = "display:none;";
+    sysbarAppsContextMenu.style = "transform:translate(81px, 0px);";
     sysbarSystem.style = null;
   }
 });
 
 document.addEventListener("contextmenu", function(e) {
     e.preventDefault();
-    osContextMenu.style = "position: fixed;";
     osContextMenu.style.top = (e.clientY - 20) + "px";
     osContextMenu.style.left = e.clientX + "px";
     setTimeout(function() {
@@ -82,7 +81,7 @@ document.addEventListener("contextmenu", function(e) {
     }, 1)
 }, false);
 document.addEventListener("mouseup", function() {
-  osContextMenu.style = "display: none;"
+  osContextMenu.style = "display:none;position:fixed;"
 })
 
 document.getElementById("systemShutdown").onmousedown = function() {
@@ -187,11 +186,11 @@ document.getElementById("closeAllWindows").onmousedown = function() {
 
 windows.forEach(window => windowEnable(window));
 
-window.onload = function() { // this executes after above has executed & resources finished loading
+window.onload = function() { // this executes after everything has executed & resources finished loading
   document.body.removeChild(document.getElementById("startup"));
-  document.getElementById("shutdown").style = "background-color:black;width:100%;height:100%;position:absolute;z-index:256;";
+  document.getElementById("shutdown").style = "background-color:black;width:100%;height:100%;position:fixed;z-index:256;";
   setTimeout(function() {
-    document.getElementById("shutdown").style = "transition:0.5s;margin:50%;margin-top:0%;width:0%;height:0%;position:absolute;";
+    document.getElementById("shutdown").style = "transition:0.5s;margin:50%;margin-top:25%;width:0%;height:0%;position:fixed;";
     setTimeout(function(){document.getElementById("shutdown").style = "display: none;"},600)
   }, 1000)
 }
