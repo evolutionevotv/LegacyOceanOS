@@ -74,6 +74,7 @@ sysbarApps.addEventListener("mouseover", function() {
 
 document.addEventListener("contextmenu", function(e) {
     e.preventDefault();
+    osContextMenu.style.display = null;
     osContextMenu.style.top = (e.clientY - 20) + "px";
     osContextMenu.style.left = e.clientX + "px";
     setTimeout(function() {
