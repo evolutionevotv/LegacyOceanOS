@@ -12,8 +12,7 @@ var windows = [
   document.getElementById("aboutWindow"),
   document.getElementById("terminalWindow"),
   document.getElementById("uiWindow"),
-  document.getElementById("settingsWindow"),
-  document.getElementById("photoviewerWindow")
+  document.getElementById("settingsWindow")
 ];
 
 setInterval( function() {
@@ -164,7 +163,7 @@ function windowEnable(elmnt) {
     elmnt.style.zIndex = 2;
     setTimeout(function() {
       elmnt.style.top = "50px";
-    }, 3)
+    }, 1)
     setTimeout(function() {
       elmnt.style.transition = "none";
     }, 100)
@@ -222,7 +221,10 @@ window.alert = function(window, title, message) {
   document.getElementById("alertTitleBar").innerHTML = window;
   document.getElementById("alertTitle").innerHTML = title;
   document.getElementById("alertMessage").innerHTML = message;
-  document.getElementById("alert").style.top = windowObject.style.top;
-  document.getElementById("alert").style.left = windowObject.style.left;
   document.getElementById("alert").style.display = null;
+  document.getElementById("alert").style.left = windowObject.style.left;
+  document.getElementById("alert").style.top = parseInt(windowObject.style.top.substring(0, windowObject.style.top.length - 2)) - 20 + "px";
+  setTimeout(function() {
+    document.getElementById("alert").style.top = windowObject.style.top;
+  }, 1)
 }
