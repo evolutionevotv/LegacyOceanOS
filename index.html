@@ -8,11 +8,27 @@
 </head>
 
 <body>
-  <script src="Settings/app.js" async="async"></script>
   <script src="main.js" async="async"></script>
-  <div id="startup" style="cursor:progress;background-color:black;color:white;width:100%;height:100%;position:absolute;z-index:256;text-align:center;"><img src="logo.webp" style="position:absolute;top:50%;left:50%;margin-top:-95px;margin-left:-75px;"></img><img src="loading.webp" style="position:absolute;top:50%;left:50%;margin-top:160px;margin-left:-15px;width:30px;height:30px;"></img><noscript><p style="width:100%;">Your browser doesn't support JavaScript :(</p></noscript><p style="width:100%;position:absolute;bottom:0;">© 2019 soup</p></div>
-  <div id="shutdown" style="display: none;"></div>
-  <div id="terminalWindow" class="window" style="display: none;">
+  <script src="Settings/app.js" async="async"></script>
+  <div id="startup" style="cursor:progress;background-color:black;color:white;width:100%;height:100%;position:absolute;z-index:256;text-align:center;"><img src="logo.webp" style="position:absolute;top:50%;left:50%;margin-top:-95px;margin-left:-75px;"><img src="loading.webp" style="position:absolute;top:50%;left:50%;margin-top:160px;margin-left:-15px;width:30px;height:30px;"><noscript><p style="width:100%;">Your browser doesn't support JavaScript :(</p></noscript><p style="width:100%;position:absolute;bottom:0;">© 2019 soup</p></div>
+  <div id="shutdown" style="display:none;"></div>
+  <div id="alert" class="window" style="display:none;z-index:200;">
+    <div id="alertTitleBar" class="windowTitleBar blur">Window</div>
+    <div class="windowBody blur" style="resize:none;padding-right:50px;">
+      <h1 id="alertTitle">Title</h1>
+      <p id="alertMessage">Message</p>
+      <button onclick="document.getElementById('alert').style.display='none';">OK</button>
+    </div>
+  </div>
+  <div id="photoviewerWindow" class="window">
+    <div id="photoviewerWindowTitleBar" class="windowTitleBar blur"><div id="photoviewerWindowClose" class="windowClose">X</div><div id="photoviewerWindowMaximize" class="windowMaximize">X</div>Photo Viewer</div>
+    <div id="photoviewerWindowBody" class="windowBody blur" style="padding:0;">
+      <div class="sysbar"><div class="sysbarButton">Open Image</div></div>
+      <p style="text-align:center;color:rgba(255,255,255,0.3);">no image :(</p>
+      <img src="">
+    </div>
+  </div>
+  <div id="terminalWindow" class="window" style="display:none;">
     <div id="terminalWindowTitleBar" class="windowTitleBar blur"><div id="terminalWindowClose" class="windowClose">X</div><div id="terminalWindowMaximize" class="windowMaximize">X</div>Terminal</div>
     <div id="terminalWindowBody" class="windowBody blur" style="padding:0;">
       <button style="width:calc(100% - 10px);margin-left:5px;margin-right:5px;" onclick="document.getElementById('terminalOutput').innerHTML = '⮞ ' + eval(document.getElementById('terminalCode').value)">Evaluate</button>
@@ -21,11 +37,14 @@
       <div id="terminalOutput" style="width:calc(100% - 10px);margin-left:5px;margin-right:5px;">⮞</div>
     </div>
   </div>
-  <div id="uiWindow" class="window" style="display: none;">
+  <div id="uiWindow" class="window" style="display:none;">
     <div id="uiWindowTitleBar" class="windowTitleBar blur"><div id="uiWindowClose" class="windowClose">X</div><div id="uiWindowMaximize" class="windowMaximize">X</div>UI</div>
     <div id="uiWindowBody" class="windowBody">
+      <div class="sysbar" style="margin-right:-15px;margin-left:-15px;"><div class="sysbarButton">Menu Bar & Button</div></div>
       <h1>Header</h1>
-      <label class="chboxContainer">Checkbox
+      <p>Paragraph</p>
+      <div class="contextMenu blur"><div class="contextMenuSelection notAllowed">Context Menu</div><div class="contextMenuSeparator"></div><div class="contextMenuSelection">...in a window!?</div></div>
+      <br><br><label class="chboxContainer">Checkbox
         <input type="checkbox"></input>
         <span class="checkmark">✓</span>
       </label>
@@ -33,17 +52,16 @@
         <input type="checkbox" disabled></input>
         <span class="checkmark notAllowed">✓</span>
       </label>
-      <button>Button</button>
-      <input type="textbox" placeholder="TextBox"></input><br><br>
+      <button>Button</button> <button disabled>Disabled Button</button><br><br>
+      <input type="textbox" placeholder="TextBox"></input> <input type="textbox" disabled placeholder="Disabled TextBox"></input><br><br>
       <input type="range"></input> Slider<br><br>
-      <textarea placeholder="TextArea"></textarea>
-      <p>
-        More custom UI elements will come in later versions.
-      </p>
+      <input type="range" disabled></input>Disabled Slider<br><br>
+      <textarea placeholder="TextArea"></textarea> <textarea disabled placeholder="Disabled TextArea"></textarea>
+      <br><br>
       <button onclick="document.getElementById('uiWindowBody').classList.add('blur')">Click me to make this window a blurWindow!</button>
     </div>
   </div>
-  <div id="settingsWindow" class="window" style="display: none;">
+  <div id="settingsWindow" class="window" style="display:none;">
     <div id="settingsWindowTitleBar" class="windowTitleBar blur"><div id="settingsWindowClose" class="windowClose">X</div><div id="settingsWindowMaximize" class="windowMaximize">X</div>Settings</div>
     <div id="settingsWindowBody" class="windowBody blur">
       <h1>Customization</h1>
@@ -59,23 +77,23 @@
       <input id="settingsFontSize" type="range" value="14" max="30" min="14" class="slider" style="margin-right: 15px;"><label id="settingsFontSizePreview">Font Size: 14px</label></input>
     </div>
   </div>
-  <div id="aboutWindow" class="window" style="display: none;">
+  <div id="aboutWindow" class="window" style="display:none;">
     <div id="aboutWindowTitleBar" class="windowTitleBar blur"><div id="aboutWindowClose" class="windowClose">X</div>About oceanOS</div>
     <div id="aboutWindowBody" class="windowBody blur" style="resize:none;text-align:center;">
-      <img src="logo.webp" style="float:left;margin-right:15px;"></img>
+      <img src="logo.webp" style="float:left;margin-right:15px;">
     <h1 style="float:right;margin-top:20px;margin-left:45px;margin-right:45px;">oceanOS</h1>
     <p><strong>Build </strong>9</p>
     <p><strong>Version </strong>0.9.2</p>
     <p>Made with love by <a href="https://www.youtube.com/channel/UCK3sTrOaVuGHqsXJcWjceLw">soup</a></p>
     </div>
   </div>
-  <div class="desktopIcon"><img src="logo.webp"></img><br>Icon Test</div>
+  <div class="desktopIcon"><img src="logo.webp"><br>Icon Test</div>
   <div id="sysbar" class="sysbar blur">
     <div id="systemButton" class="sysbarButton"><strong>oceanOS</strong></div>
     <div id="appsButton" class="sysbarButton">Applications</div>
-    <div id="sysbarClock" class="sysbarObject" style="float:right;">Welcome!</div>
+    <div id="sysbarClock" class="sysbarObject" style="float:right;"></div>
   </div>
-  <div id="systemContextMenu" class="contextMenu blur" style="display: none;">
+  <div id="systemContextMenu" class="contextMenu blur" style="display:none;">
     <div id="aboutWindowOpen" class="contextMenuSelection">About oceanOS</div>
     <div id="settingsWindowOpen" class="contextMenuSelection">Settings</div>
     <div id="terminalWindowOpen2" class="contextMenuSelection">Terminal</div>
@@ -84,10 +102,11 @@
     <div id="systemReboot" class="contextMenuSelection">Reboot</div>
     <div class="notAllowed contextMenuSelection">Sleep</div>
   </div>
-  <div id="appsContextMenu" class="contextMenu blur" style="display: none;">
-    <div id="settingsWindowOpen2" class="contextMenuSelection"><img src="Settings/icon.webp" style="vertical-align:sub;margin-right:5px;"</img>Settings</div>
-    <div id="terminalWindowOpen" class="contextMenuSelection"><img src="Terminal/icon.webp" style="vertical-align:sub;margin-right:5px;"</img>Terminal</div>
-    <div id="uiWindowOpen" class="contextMenuSelection"><img src="UI/icon.webp" style="vertical-align:sub;margin-right:5px;"</img>UI</div>
+  <div id="appsContextMenu" class="contextMenu blur" style="display:none;">
+    <div id="settingsWindowOpen2" class="contextMenuSelection"><img src="Settings/icon.webp" style="vertical-align:sub;margin-right:5px;">Settings</div>
+    <div id="terminalWindowOpen" class="contextMenuSelection"><img src="Terminal/icon.webp" style="vertical-align:sub;margin-right:5px;">Terminal</div>
+    <div id="uiWindowOpen" class="contextMenuSelection"><img src="UI/icon.webp" style="vertical-align:sub;margin-right:5px;">UI</div>
+    <div id="photoviewerWindowOpen" class="contextMenuSelection"><img src="Photo Viewer/icon.webp" style="vertical-align:sub;margin-right:5px;">Photo Viewer</div>
   </div>
   <div id="osContextMenu" class="contextMenu blur" style="display:none;position:fixed;">
     <div id="closeAllWindows" class="contextMenuSelection" onclick="closeAllWindows()">Close all windows</div>
@@ -96,12 +115,10 @@
     <div id="terminalWindowOpen3" class="contextMenuSelection">Terminal</div>
   </div>
   <div class="dock blur">
-    <div id="uiWindowOpen2" class="dockIcon"><img src="UI/icon.webp"></img>
-    </div>
-    <div id="terminalWindowOpen4" class="dockIcon"><img src="Terminal/icon.webp"></img>
-    </div>
-    <div id="settingsWindowOpen4" class="dockIcon"><img src="Settings/icon.webp"></img>
-    </div>
+    <div id="photoviewerWindowOpen2" class="dockIcon"><img src="Photo Viewer/icon.webp"></div>
+    <div id="uiWindowOpen2" class="dockIcon"><img src="UI/icon.webp"></div>
+    <div id="terminalWindowOpen4" class="dockIcon"><img src="Terminal/icon.webp"></div>
+    <div id="settingsWindowOpen4" class="dockIcon"><img src="Settings/icon.webp"></div>
   </div>
 </body>
 

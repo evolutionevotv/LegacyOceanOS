@@ -12,7 +12,8 @@ var windows = [
   document.getElementById("aboutWindow"),
   document.getElementById("terminalWindow"),
   document.getElementById("uiWindow"),
-  document.getElementById("settingsWindow")
+  document.getElementById("settingsWindow"),
+  document.getElementById("photoviewerWindow")
 ];
 
 setInterval( function() {
@@ -109,6 +110,7 @@ function windowEnable(elmnt) {
   var thirdActivate = null;
   var fourthActivate = null;
   var maximize = null;
+  var maximized = false;
   document.getElementById(elmnt.id + "Close").onmouseup = function() {
     elmnt.style.transition = null;
     elmnt.style.transform = "scale(0.1)";
@@ -122,24 +124,41 @@ function windowEnable(elmnt) {
   try {var fourthActivate=document.getElementById(elmnt.id + "Open4");}catch(a){}
   try {var maximize=document.getElementById(elmnt.id + "Maximize");}catch(a){}
   if (maximize) {
+    var width = null;
+    var height = null;
     maximize.onmouseup = function() {
-      elmnt.style.height = document.getElementById(elmnt.id + "Body").style.height ? document.getElementById(elmnt.id + "Body").style.height : "300px";
-      elmnt.style.width = document.getElementById(elmnt.id + "Body").style.width ? document.getElementById(elmnt.id + "Body").style.width : "300px";
-      document.getElementById(elmnt.id + "Body").style.resize = "none";
-      document.getElementById(elmnt.id + "Body").style.height = null;
-      document.getElementById(elmnt.id + "Body").style.width = null;
-      elmnt.style.transition = "0.5s"
-      setTimeout(function() {
-        elmnt.style.top = "31px";
-        elmnt.style.left = "0px";
-        elmnt.style.width = "100%";
-        elmnt.style.height = "calc(100vh - 148px)";
-        setTimeout(function() {elmnt.style.transition = "none";}, 500);
-      }, 1)
+      if (maximized == false) {
+        maximized = true;
+        width = document.getElementById(elmnt.id + "Body").style.width ? document.getElementById(elmnt.id + "Body").style.width : "300px";
+        height = document.getElementById(elmnt.id + "Body").style.height ? document.getElementById(elmnt.id + "Body").style.height : "300px";
+        elmnt.style.width = width;
+        elmnt.style.height = height;
+        document.getElementById(elmnt.id + "Body").style.resize = "none";
+        document.getElementById(elmnt.id + "Body").style.height = null;
+        document.getElementById(elmnt.id + "Body").style.width = null;
+        elmnt.style.transition = "0.5s"
+        setTimeout(function() {
+          elmnt.style.top = "31px";
+          elmnt.style.left = "0";
+          elmnt.style.width = "100%";
+          elmnt.style.height = "calc(100vh - 148px)";
+          setTimeout(function() {elmnt.style.transition = "none";}, 500);
+        }, 1)
+      } else {
+        document.getElementById(elmnt.id + "Body").style.resize = null;
+        elmnt.style.transition = "0.5s";
+        setTimeout(function() {
+          elmnt.style.width = width;
+          elmnt.style.height = height;
+          elmnt.style.top = "50px";
+          setTimeout(function() {elmnt.style.transition = "none";elmnt.style.height = null;elmnt.style.width = null;document.getElementById(elmnt.id + "Body").style.height = height;document.getElementById(elmnt.id + "Body").style.width = width;maximized = false;}, 500);
+        }, 1)
+      }
     }
   }
   function openWindow() {
     if (maximize) document.getElementById(elmnt.id + "Body").style.resize = null;
+    if (maximized) maximized = false;
     elmnt.style = "top: 30px;";
     windows.forEach(window => window.style.zIndex = 1);
     elmnt.style.zIndex = 2;
@@ -155,24 +174,28 @@ function windowEnable(elmnt) {
   if (thirdActivate) thirdActivate.addEventListener("click", openWindow);
   if (fourthActivate) fourthActivate.addEventListener("click", openWindow);
   document.getElementById(elmnt.id + "TitleBar").onmousedown = function(e) {
-    e = e || window.event;
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    windows.forEach(window => window.style.zIndex = 1);
-    elmnt.style.zIndex = 2;
-    document.onmouseup = function() {document.onmouseup = null; document.onmousemove = null;};
-    document.onmousemove = function(e) {
+    if (maximized == false) {
       e = e || window.event;
-      pos1 = pos3 - e.clientX;
-      pos2 = pos4 - e.clientY;
       pos3 = e.clientX;
       pos4 = e.clientY;
-      e.preventDefault();
-      elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-      elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+      windows.forEach(window => window.style.zIndex = 1);
+      elmnt.style.zIndex = 2;
+      document.onmouseup = function() {document.onmouseup = null; document.onmousemove = null;};
+      document.onmousemove = function(e) {
+        e = e || window.event;
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        e.preventDefault();
+        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+      }
     }
   }
 }
+
+windows.forEach(window => windowEnable(window));
 
 document.getElementById("closeAllWindows").onmousedown = function() {
   windows.forEach(window => {
@@ -185,8 +208,6 @@ document.getElementById("closeAllWindows").onmousedown = function() {
   })
 }
 
-windows.forEach(window => windowEnable(window));
-
 window.onload = function() { // this executes after everything has executed & resources finished loading
   document.body.removeChild(document.getElementById("startup"));
   document.getElementById("shutdown").style = "background-color:black;width:100%;height:100%;position:fixed;z-index:256;";
@@ -194,4 +215,14 @@ window.onload = function() { // this executes after everything has executed & re
     document.getElementById("shutdown").style = "transition:0.5s;margin:50%;margin-top:25%;width:0%;height:0%;position:fixed;";
     setTimeout(function(){document.getElementById("shutdown").style = "display: none;"},600)
   }, 1000)
+}
+
+window.alert = function(window, title, message) {
+  var windowObject = document.getElementById(window.toLowerCase() + "Window");
+  document.getElementById("alertTitleBar").innerHTML = window;
+  document.getElementById("alertTitle").innerHTML = title;
+  document.getElementById("alertMessage").innerHTML = message;
+  document.getElementById("alert").style.top = windowObject.style.top;
+  document.getElementById("alert").style.left = windowObject.style.left;
+  document.getElementById("alert").style.display = null;
 }

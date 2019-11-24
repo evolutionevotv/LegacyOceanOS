@@ -51,9 +51,8 @@ a:hover { text-decoration: underline; }
   padding-right: 10px;
   display: inline-block;
 }
-.sysbarButton:hover {
-  background-color: rgba(3,169,255,0.5);
-}
+.sysbarButton:hover { background-color: rgba(3,169,255,0.5); }
+.sysbarButton:active { background-color: #004b8a; }
 
 .contextMenu {
   position: relative;
@@ -76,7 +75,7 @@ a:hover { text-decoration: underline; }
 }
 .contextMenuSelection img { width: 20px; height: 20px; }
 .notAllowed {
-  color: silver;
+  color: rgba(255,255,255,0.3);
   cursor: not-allowed;
 }
 .contextMenuSelection:hover:not(.notAllowed) {
@@ -111,16 +110,24 @@ a:hover { text-decoration: underline; }
   color: #ebebeb;
   border-radius: 0px 0px 5px 5px;
   padding: 15px;
+  padding-top: 0;
   height: 100%;
   resize: both;
   overflow: auto;
 }
+.windowBody .sysbar {
+  background-color: transparent;
+  padding: 5px;
+  border-radius: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.3);
+}
+.windowBody .sysbarButton { border-radius: 5px; margin: 0;}
 .blur {
   color: white;
   background-color: rgba(0,0,0,0.5);
   backdrop-filter: blur(10px);
 }
-h1 { margin-top: 10px;margin-bottom:10px; }
+h1 { margin-top: 10px; margin-bottom:10px; }
 .windowClose {
   background-color: rgba(255,0,0,0.6);
   color: transparent;
@@ -164,7 +171,7 @@ button:active, .checkmark:active {
 }
 button[disabled], input[disabled], textarea[disabled] {
   background: rgba(0,0,0,0.15);
-  color: silver;
+  color: rgba(255,255,255,0.3);
   cursor: not-allowed;
 }
 .chboxContainer {
