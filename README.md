@@ -1,6 +1,4 @@
-# oceanOS
-A window manager/desktop environment in your browser.
+# LegacyOceanOS
+LegacyOceanOS is an archived version of oceanOS from 24th November 2019, oceanOS is now more known as auroraOS.
 
-[Try it out!](https://soupy-developer.github.io/oceanOS/index.html)
-
-[Trailer](https://www.youtube.com/watch?v=BrLeCAFD4bo)
+Hosted version is not available as for the time of this edit
